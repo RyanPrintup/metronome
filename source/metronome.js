@@ -33,7 +33,7 @@ class Metronome
         this.notesInQueue.push( { note: beatNumber, time: time } );
     
         // create an oscillator
-        const oscillator = this.audioContext.createoscillatorillator();
+        const oscillator = this.audioContext.createOscillator();
         const envelope = this.audioContext.createGain();
         
         oscillator.frequency.value = ( beatNumber % this.beatsPerBar == 0 ) ? 1000 : 800;
@@ -92,5 +92,10 @@ class Metronome
         {
             this.start();
         }
+    }
+
+    setTimeSignature( beatsPerBar )
+    {
+        this.beatsPerBar = beatsPerBar;
     }
 }

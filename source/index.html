@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="metronome.css">
 </head>
 <body>
-    <div class="title">Simple Metronome</div>
+    <div class="title">Metronome</div>
+
     <button id="play-button" class="">
         <div id="play-pause-icon" class="play"></div>
     </button>
@@ -23,6 +24,15 @@
 
         <button class="tempo-change" data-change="+1">+</button>
         <button class="tempo-change" data-change="+5">+5</button>
+    </div>
+
+    <div class="tempo-container">
+        <label for="time-signature">Time Signature:</label>
+        <select name="time-signature" id="time-signature">
+            <option value="4/4">4/4</option>
+            <option value="3/4">3/4</option>
+            <option value="6/8">6/8</option>
+        </select>
     </div>
 
     <script src="metronome.js"></script>
