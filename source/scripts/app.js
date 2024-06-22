@@ -48,6 +48,10 @@ document.addEventListener( 'keydown', function onEvent( event )
     {
         metronome.tempo++;
     }
+    else if ( event.code === 'Space' )
+    {
+        metronome.startStop();
+    }
 
     tempo.textContent = metronome.tempo;
 });
