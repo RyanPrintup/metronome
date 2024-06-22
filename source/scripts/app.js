@@ -1,24 +1,16 @@
 var metronome = new Metronome();
-var tempo = document.getElementById('tempo');
+const tempo = document.getElementById( 'tempo' );
 tempo.textContent = metronome.tempo;
 
-const playButton = document.getElementById('play-button');
-const playPauseIcon = document.getElementById('play-pause-icon');
-playButton.addEventListener('click', function() {
+const playButton = document.getElementById( 'play-button' );
+const playPauseIcon = document.getElementById( 'play-pause-icon' );
+playButton.addEventListener( 'click', function()
+{
     metronome.startStop();
-
-    if ( metronome.isRunning )
-    {
-        playPauseIcon.className = 'pause';
-    }
-    else
-    {
-        playPauseIcon.className = 'play';
-    }
-
+    playPauseIcon.className = metronome.isRunning ? 'pause' : 'play';
 });
 
-const tempoChangeButtons = document.getElementsByClassName('tempo-change');
+const tempoChangeButtons = document.getElementsByClassName( 'tempo-change' );
 for ( var i = 0; i < tempoChangeButtons.length; i++ )
 {
     tempoChangeButtons[i].addEventListener( 'click', function() {
@@ -37,4 +29,18 @@ timeSignatureSelect.addEventListener( 'change', function() {
     {
         metronome.setTimeSignature( 4 );
     }
+});
+
+document.addEventListener( 'keydown', function onEvent( event )
+{
+    if ( event.code === 'ArrowLeft' )
+    {
+        metronome.tempo--;
+    }
+    else if ( event.code === 'ArrowRight' )
+    {
+        metronome.tempo++;
+    }
+
+    tempo.textContent = metronome.tempo;
 });
