@@ -12,6 +12,7 @@ class Metronome
         this.nextNoteTime = 0.0;     // when the next note is due
         this.isRunning = false;
         this.intervalID = null;
+        this.accentBeatOne = true;
     }
 
     nextNote()
@@ -29,14 +30,16 @@ class Metronome
 
     scheduleNote( beatNumber, time )
     {
-        // push the note on the queue, even if we're not playing.
+        // Push the note on the queue, even if we're not playing.
         this.notesInQueue.push( { note: beatNumber, time: time } );
     
-        // create an oscillator
+        // Create an oscillator
         const oscillator = this.audioContext.createOscillator();
         const envelope = this.audioContext.createGain();
         
-        oscillator.frequency.value = ( beatNumber % this.beatsPerBar == 0 ) ? 1000 : 800;
+        const isBeatOne = ( beatNumber % this.beatsPerBar == 0 );
+
+        oscillator.frequency.value = ( isBeatOne && this.accentBeatOne ) ? 1000 : 800;
         envelope.gain.value = 1;
         envelope.gain.exponentialRampToValueAtTime( 1, time + 0.001 );
         envelope.gain.exponentialRampToValueAtTime( 0.001, time + 0.02 );
@@ -50,7 +53,7 @@ class Metronome
 
     scheduler()
     {
-        // while there are notes that will need to play before the next interval, schedule them and advance the pointer.
+        // While there are notes that will need to play before the next interval, schedule them and advance the pointer.
         while ( this.nextNoteTime < this.audioContext.currentTime + this.scheduleAheadTime )
         {
             this.scheduleNote( this.currentBeatInBar, this.nextNoteTime );
@@ -68,10 +71,8 @@ class Metronome
         }
 
         this.isRunning = true;
-
         this.currentBeatInBar = 0;
         this.nextNoteTime = this.audioContext.currentTime + 0.05;
-
         this.intervalID = setInterval( () => this.scheduler(), this.lookahead );
     }
 
