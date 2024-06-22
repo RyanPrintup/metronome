@@ -1,5 +1,7 @@
 var metronome = new Metronome();
+const accentBeatOne = document.getElementById( 'accent-beat-one' );
 const tempo = document.getElementById( 'tempo' );
+accentBeatOne.checked = metronome.accentBeatOne;
 tempo.textContent = metronome.tempo;
 
 const playButton = document.getElementById( 'play-button' );
@@ -29,6 +31,11 @@ timeSignatureSelect.addEventListener( 'change', function() {
     {
         metronome.setTimeSignature( 4 );
     }
+});
+
+accentBeatOne.addEventListener( 'click', function()
+{
+    metronome.accentBeatOne = accentBeatOne.checked;
 });
 
 document.addEventListener( 'keydown', function onEvent( event )
